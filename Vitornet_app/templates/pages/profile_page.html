@@ -24,11 +24,58 @@
    
 </div>
 
-
-<div class='post_title'>Posts</div>
+<div class="profile_page_options">
+<div class='post_title selected'>Posts</div>
+<div class='post_title'>Curtidas</div>
+<div class='post_title'>Salvos</div>
+</div>
+<div class='selected_posts'>
 {% for post in posts %}
    <div>
   {% include 'partials/post.html'%}
 </div>
 {% endfor %}
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+     $('.post_title').click(function() {
+        $('.post_title').removeClass('selected');
+        $(this).addClass('selected');
+
+        var content = $('.selected_posts');
+        var selected = $(this).text()
+
+        if (selected === 'Posts') {
+          content.html(`
+              {% for post in posts %}
+                  <div>
+                      {% include 'partials/post.html' %}
+                  </div>
+              {% endfor %}
+          `);
+      } else if (selected === 'Curtidas') {
+          content.html('Conteúdo das Curtidas');
+      } else if (selected === 'Salvos') {
+        content.html(`
+        {% for post in saves %}
+            <div>
+                {% include 'partials/post.html' %}
+            </div>
+        {% endfor %}
+    `);
+      }
+
+
+     })
+
+
+  })
+
+
+
+
+
+</script>
 </body>
+

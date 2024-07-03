@@ -211,6 +211,7 @@ body {
 }
 .login_block{
     margin: 15px 20px;
+    margin-top: 0px;
     max-width: 600px;
     border: 1px solid rgb(8, 0, 0);
     display: flex;
@@ -297,6 +298,7 @@ body {
     background-color: white;
 }
 .center{
+    margin-top: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -399,16 +401,25 @@ body {
     
 }
 
+.profile_page_options{
+    display: flex;
+    flex-direction: row;
+    margin-left: 85px;
+}
+
+
+
 .post_title{
-    margin-left: 35px;
-    margin-bottom: 15px;
-    font-size: 35px;
-    color: white;
+    padding: 15px 25px;
+    font-size: 21px;
+    color: rgb(136, 136, 136);
     font-family: sans-serif;
+}
 
-    
-
-
+.selected{
+    background-color: var(--color-primary);
+    border-radius: 7px;
+    color: white;
 }
 
 .over_view{
@@ -432,8 +443,8 @@ body {
     max-width: 600px;
     color: white;
     margin-left: 25px;
-    margin-bottom: 95px;
-    margin-top: 30px;
+    margin-bottom: 75px;
+    margin-top: 0px;
 }
 
 .apresentation_title{
@@ -495,13 +506,13 @@ body {
         flex-direction: column;
     }
     .post_title{
-       
-        font-size: 30px;
+        font-size: 18px;
     }
     .vitornet_logo_image{
         margin-right: 10px;
     }
     .center{
+        margin-top: 10px;
         flex-direction: column;
     }
     .apresentation_text{
@@ -509,5 +520,8 @@ body {
     }
     .login_block{
         margin-top: 35px;
+    }
+    .profile_page_options{
+        margin-left: 25px;
     }
 }

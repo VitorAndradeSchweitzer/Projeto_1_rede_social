@@ -11,11 +11,8 @@
 
     {% endfor %}
      
- 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-
-
-
     $(document).ready(function() {
         $('.read_more').click(function(){
             var read_button = $(this); 
@@ -49,8 +46,6 @@
 
 
         $('.like_button').each(function() {
-
-
             var button = $(this);
             var postId = button.data('post-id');
             var liked = localStorage.getItem('liked_' + postId); 
@@ -85,7 +80,44 @@
                 });
             });
         });
-    });
+
+        $('.save_button').each(function(){
+            var button = $(this);
+            var postId = button.data('post-id');
+            var saved = localStorage.getItem('saved_' + postId); 
+            if (saved === 'true') {
+                button.addClass('liked');
+                button.html('Desalvar');
+            } else {
+                button.html('Salvar');
+            }
+
+            button.click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "{% url 'Vitor.net:save' 0 %}".replace('0', postId),
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    method: 'POST',
+                    success: function(response) {
+
+                        if (response.saved) {
+                            button.addClass('liked');
+                            button.text('Desalvar');
+                            localStorage.setItem('saved_' + postId, 'true'); 
+                        } else {
+                            button.text('Salvar');
+                            button.removeClass('liked');
+                            localStorage.removeItem('saved_' + postId); 
+
+                        }
+
+                    }
+                });
+            });
+        });
+        });
 </script>
 </body>
 

@@ -9,4 +9,5 @@ urlpatterns = [
    path('home/', views.home, name='home'),
    path('profile/<int:cont_id>', views.profile_page, name='profile' ),
    path('like/<int:post_id>/', views.like, name='like'),
+   path('save/<int:post_id>/', views.save, name='save'),
 ]

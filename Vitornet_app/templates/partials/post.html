@@ -38,7 +38,6 @@
   {% if is_home %}
     <div class="buttons">                
         <a href="{% url 'Vitor.net:like' post.id %}">
-       
     <button data-post-id="{{ post.id }}" data-likes="{{ post.likes }}" class="like_button media_button" type="submit">
         {% if post.user_has_liked %}
         Descurtir
@@ -49,8 +48,12 @@
 </button>
 
         </a>
+
        <button class="comment_button media_button">Comentar</button>
-       <button class="save_button media_button">Salvar</button>
+
+       <a href="{% url 'Vitor.net:save' post.id %}">
+       <button data-post-id="{{ post.id }}" class="save_button media_button">Salvar</button>
+    </a>
     </div>
 
 
@@ -58,25 +61,6 @@
 </div>
  {% endif %}
 
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.read_more').click(function(){
-            var read_button = $(this); 
-            var text_container = $(this).prev('.text_container'); 
-            text_container.css('height', 'fit-content');
-            
-            if (read_button.text() === 'ler mais') {
-                read_button.text('ler menos');
-            } else {
-                read_button.text('ler mais');
-                text_container.css('height', ''); 
-            }
-        });
-    })
-    
 
- 
-</script>
 
 

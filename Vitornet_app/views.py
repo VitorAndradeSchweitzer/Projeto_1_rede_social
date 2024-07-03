@@ -79,9 +79,12 @@ def create_cont(request):
 def profile_page(request, cont_id):
     conta= get_object_or_404(Conta, id=cont_id)
     posts = Post.objects.filter(author_profile__user=request.user)
+    saves = Save.objects.filter(user=request.user)
+    saved_posts = [save.post for save in saves]
     return render(request, 'pages/profile_page.html', context={
         'conta': conta,
         'posts': posts,
+        'saves': saved_posts,
         'is_profile_page': True
     }) 
 
@@ -108,9 +111,9 @@ def like(request, post_id):
         'liked': liked_status
     })
 
-def Salvar(request, post_id):
+def save(request, post_id):
       post = get_object_or_404(Post, id=post_id)
-      saved = Save.ojects.filter(user=request.user, post=post).first()
+      saved = Save.objects.filter(user=request.user, post=post).first()
     
 
       if saved:
@@ -121,5 +124,5 @@ def Salvar(request, post_id):
           saved_status = True
 
       return JsonResponse({
-          saved: saved_status
+          'saved': saved_status
       })
