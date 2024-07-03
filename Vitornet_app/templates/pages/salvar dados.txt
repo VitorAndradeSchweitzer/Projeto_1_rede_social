@@ -1,0 +1,41 @@
+      
+                <button id="like-btn-{{ post.id }}" class="like_button" type="submit">
+                    {% if post.user_has_liked %}
+                    Unlike
+                {% else %}
+                    Like
+                {% endif %}
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.like-form').submit(function(event) {
+            event.preventDefault();
+            var form = $(this);
+            var postId = form.attr('action').split('/')[2];
+            var url = form.attr('action');
+            var btn = $('#like-btn-' + postId);
+    
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.liked) {
+                        btn.text('Unlike');
+                       
+                    } else {
+                        btn.text('Like');
+                      
+                    }
+                    $('#likes-count-' + postId).text(response.likes_count);
+                    user_likes[postId] = response.liked;
+                }
+            });
+        });
+    });
+</script>

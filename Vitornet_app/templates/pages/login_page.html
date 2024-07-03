@@ -1,0 +1,146 @@
+{% include 'partials/head.html' %}
+
+<body> 
+    {% include 'partials/header.html' %}
+ <div class="center">
+   {% if not create_cont %}
+  
+      <div class='apresentation_text'>
+    <h1 class='apresentation_title'>Vitor.net: Conectando Vidas Através de Eventos e Atividades Diárias</h1>
+    <p class='apresentation_p'>
+        Vitor.net: Conectando Vidas Através de Eventos e Atividades Diárias
+        
+        Bem-vindo ao Vitor.net, sua plataforma dedicada à conexão e integração comunitária através de eventos e atividades diárias. Criado com o propósito de unir pessoas e fortalecer laços, o Vitor.net oferece uma experiência única onde todos podem participar, compartilhar e descobrir o que está acontecendo ao seu redor.</p>
+    <h2 class='apresentation_title_2'>Explorando a Comunidade Juntos</h2>  
+    <p class='apresentation_p'>No Vitor.net, cada usuário tem a oportunidade de explorar uma variedade de eventos e atividades que estão acontecendo em sua cidade, bairro ou mesmo online. Desde festivais culturais até pequenas reuniões de interesse especial, nossa plataforma facilita a descoberta de eventos que enriquecem a vida e promovem a interação pessoal.</p> 
+   <a href="">
+    <button class='apresentation_button'>Cadastrar-me!</button>
+</a>
+</div> 
+{% endif%}
+
+        {% if create_cont %}
+
+            <form  action="{% url 'Vitor.net:create_cont'%}" method='POST' >
+            {% csrf_token %}
+
+        {% else %}
+
+            <form  action="{% url 'Vitor.net:login_page'%}" method='POST' >
+           {% csrf_token %}
+
+        {% endif%}
+
+        <div class="login_block">
+
+            <h1 class="login_main login">Bem vindo a VITOR.NET</h1>
+            {% if not create_cont %}
+            <h2 class='login'>Faça login para continuar</h2>
+            {% else %}
+            <h2 class='login'>Cadastresse para começar a experiencia!</h2>
+            {% endif%}
+              {% if create_cont %}
+
+                  <p class="login_text login">Username:</p>
+                  <input type="text" name="username" id="" class='login_user_response'>
+                  <div class='error_message'>{{form.username.errors}}</div>
+
+                <div class='first_last_name'>
+                    <p class="login_text login">First_name:</p>
+                    <p class="login_text login">Last_name:</p>
+                </div>
+
+                <div class='first_last_name'>          
+                    <input type="text" name="first_name" id="" class='login_user_response'>
+                    <input type="text" name="last_name" id="last_name" class='login_user_response'>
+               
+                
+                </div>
+                <div>
+                  <div class='error_message'>{{form.first_name.errors}}</div>
+                  <div class='error_message'>{{form.last_name.errors}}</div>
+                </div>
+                  {% endif%}
+
+
+<p class="login_text login">Email:</p>
+            <input type="text" name="email" id="" class='login_user_response'>
+            <div class='error_message'>{{form.email.errors}}</div>
+
+        {% if not error %}
+
+         
+         
+            <p class="login_text login">Password:</p>
+            <div class="password_container">
+                <div  id="eye" class="password_view"><svg fill="#ffffff" width="15px" height="15px" viewBox="0 0 32 32"
+                        version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <title>mostrar senha</title>
+                        <path
+                            d="M0 16q0.064 0.128 0.16 0.352t0.48 0.928 0.832 1.344 1.248 1.536 1.664 1.696 2.144 1.568 2.624 1.344 3.136 0.896 3.712 0.352 3.712-0.352 3.168-0.928 2.592-1.312 2.144-1.6 1.664-1.632 1.248-1.6 0.832-1.312 0.48-0.928l0.16-0.352q-0.032-0.128-0.16-0.352t-0.48-0.896-0.832-1.344-1.248-1.568-1.664-1.664-2.144-1.568-2.624-1.344-3.136-0.896-3.712-0.352-3.712 0.352-3.168 0.896-2.592 1.344-2.144 1.568-1.664 1.664-1.248 1.568-0.832 1.344-0.48 0.928zM10.016 16q0-2.464 1.728-4.224t4.256-1.76 4.256 1.76 1.76 4.224-1.76 4.256-4.256 1.76-4.256-1.76-1.728-4.256zM12 16q0 1.664 1.184 2.848t2.816 1.152 2.816-1.152 1.184-2.848-1.184-2.816-2.816-1.184-2.816 1.184l2.816 2.816h-4z">
+                        </path>
+                    </svg>
+                </div>
+                <input type="password" id="password" name='password' class='login_user_response'>
+            </div>
+          <div class='error_message'>{{form.password.errors}}</div>
+                
+               {% else %}
+
+                    
+                    
+                    <p class="login_text login error">Password:</p>
+                    <div class="password_container">
+                        <div id='eye' class="password_view"><svg fill="#ffffff" width="15px" height="15px" viewBox="0 0 32 32"
+                                version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <title>mostrar senha</title>
+                                <path
+                                    d="M0 16q0.064 0.128 0.16 0.352t0.48 0.928 0.832 1.344 1.248 1.536 1.664 1.696 2.144 1.568 2.624 1.344 3.136 0.896 3.712 0.352 3.712-0.352 3.168-0.928 2.592-1.312 2.144-1.6 1.664-1.632 1.248-1.6 0.832-1.312 0.48-0.928l0.16-0.352q-0.032-0.128-0.16-0.352t-0.48-0.896-0.832-1.344-1.248-1.568-1.664-1.664-2.144-1.568-2.624-1.344-3.136-0.896-3.712-0.352-3.712 0.352-3.168 0.896-2.592 1.344-2.144 1.568-1.664 1.664-1.248 1.568-0.832 1.344-0.48 0.928zM10.016 16q0-2.464 1.728-4.224t4.256-1.76 4.256 1.76 1.76 4.224-1.76 4.256-4.256 1.76-4.256-1.76-1.728-4.256zM12 16q0 1.664 1.184 2.848t2.816 1.152 2.816-1.152 1.184-2.848-1.184-2.816-2.816-1.184-2.816 1.184l2.816 2.816h-4z">
+                                </path>
+                            </svg>
+                        </div>
+                        <input type="password" id="password" name='password' class='login_user_response error'>
+                    </div>
+                        
+                        <div class='error_message'>Email ou senha incorretos</div>
+                        <div class='error_message'>tente novamente</div>
+
+                {% endif %}
+
+                {% if not create_cont %}
+                    <a class='create_new_link'href="{% url 'Vitor.net:create_cont'%}"><p>Não tem uma conta?</p>
+                      <p>clique aqui!</p>
+                    </a>
+                            
+                    <button href="{% url 'Vitor.net:login_page' %}" type='submit' class="submit_button">ENTRAR</button>
+
+               {% else %}
+
+                  <a href="{% url 'Vitor.net:login_page' %}">
+                     <button type='submit' class="submit_button">REGISTRAR</button>
+                   </a> 
+                </form>
+
+        {% endif%}
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        var senha = $('#password');
+        var olho= $("#eye");
+
+        olho.mousedown(function() {
+        senha.attr("type", "text");
+        });
+
+        olho.mouseup(function() {
+        senha.attr("type", "password");
+        });
+
+        $( "#olho" ).mouseout(function() { 
+        $("#senha").attr("type", "password");
+        })
+        });
+    </script>
+</body>

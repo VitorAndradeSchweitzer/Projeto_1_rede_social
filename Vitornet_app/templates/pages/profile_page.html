@@ -1,0 +1,34 @@
+{% include 'partials/head.html' %}
+<body>
+    {% include "partials/header.html" %}
+    
+
+<div class='profile_content'>
+         <div class="image_username">
+             <img src="{{conta.picture.url}}" alt="" class='login_page_profile_picture'>
+          <p class="username">{{conta.user.username}}</p></div>
+        <div class='count_info'>
+         
+         <div class="title "> Email:   </div>
+         <p class="email info">{{conta.user.email}}</p>
+     
+        <div class="title"> Primeiro nome:   </div>
+            <p class="first_name info">{{conta.user.first_name}}</p>
+           
+           <div class="title"> Sobrenome:   </div>
+            <p class="last_name info">{{conta.user.last_name}}</p>
+           </div>
+           
+</div>
+
+   
+</div>
+
+
+<div class='post_title'>Posts</div>
+{% for post in posts %}
+   <div>
+  {% include 'partials/post.html'%}
+</div>
+{% endfor %}
+</body>

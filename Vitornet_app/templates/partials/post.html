@@ -1,0 +1,82 @@
+{% load custom_filters %}
+
+
+
+<div class="post">
+    <div class="profile_user">
+       
+        <img class='user_picture' src="{{post.author_profile.picture.url}}" alt="">
+        
+    </div>
+    <div class="post_text">
+
+        <div class="user_name">{{post.author_profile.user.username}} </div>
+        <div class="post_hour">{{post.created_at}}</div>
+     
+        
+        {% if post.text|char_count >= 1000 %}
+        <div class="text_container limit">
+            <p id='post_content' class="post_content">{{post.text}}</p>     
+
+        </div>
+        <button id='read_button'class='read_more'>ler mais</button>
+        {% else %}    
+            <p id='post_content' class="post_content">{{post.text}}</p>     
+
+        {% endif%}
+        
+
+
+        {% if post.image %}
+         <img src="{{ post.image.url}}" alt="" class='post_image'>
+         {% endif %}
+       
+</div>
+   
+<div>
+  </div>
+  {% if is_home %}
+    <div class="buttons">                
+        <a href="{% url 'Vitor.net:like' post.id %}">
+       
+    <button data-post-id="{{ post.id }}" data-likes="{{ post.likes }}" class="like_button media_button" type="submit">
+        {% if post.user_has_liked %}
+        Descurtir
+    {% else %}
+        Curtir
+    {% endif %}
+    <span class="like-count">( {{ post.likes }} )</span>
+</button>
+
+        </a>
+       <button class="comment_button media_button">Comentar</button>
+       <button class="save_button media_button">Salvar</button>
+    </div>
+
+
+
+</div>
+ {% endif %}
+
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.read_more').click(function(){
+            var read_button = $(this); 
+            var text_container = $(this).prev('.text_container'); 
+            text_container.css('height', 'fit-content');
+            
+            if (read_button.text() === 'ler mais') {
+                read_button.text('ler menos');
+            } else {
+                read_button.text('ler mais');
+                text_container.css('height', ''); 
+            }
+        });
+    })
+    
+
+ 
+</script>
+
+

@@ -1,0 +1,92 @@
+{% include 'partials/head.html' %}
+
+<body>
+    {% include 'partials/header.html' %}
+    {% csrf_token %}
+
+    
+    {% for post in posts %}
+
+    {% include 'partials/post.html'%}
+
+    {% endfor %}
+     
+ 
+<script>
+
+
+
+    $(document).ready(function() {
+        $('.read_more').click(function(){
+            var read_button = $(this); 
+            var text_container = $(this).prev('.text_container'); 
+            text_container.css('height', 'fit-content');
+            
+            if (read_button.text() === 'ler mais') {
+                read_button.text('ler menos');
+            } else {
+                read_button.text('ler mais');
+                text_container.css('height', ''); 
+            }
+        });
+    });
+   $(document).ready(function() {
+    $('.post_image').click(function(){
+        var post_image = $(this)
+        
+        if (post_image.hasClass('post_image over_view')){
+          post_image.removeClass('over_view');
+       
+   
+        } else {
+            post_image.addClass('over_view')
+            
+   
+        }
+            });
+
+
+
+
+        $('.like_button').each(function() {
+
+
+            var button = $(this);
+            var postId = button.data('post-id');
+            var liked = localStorage.getItem('liked_' + postId); 
+          
+            if (liked === 'true') {
+                button.addClass('liked');
+                button.html('Descurtir <span class="like-count">( ' + button.data('likes') + ' )</span>');
+            } else {
+                button.html('Curtir <span class="like-count">( ' + button.data('likes') + ' )</span>');
+            }
+    
+            button.click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "{% url 'Vitor.net:like' 0 %}".replace('0', postId),
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        button.find('.like-count').text(response.likes);
+                        if (response.liked) {
+                            button.addClass('liked');
+                            button.text('Descurtir ' +'( ' + response.likes + ' )');
+                            localStorage.setItem('liked_' + postId, 'true'); 
+                        } else {
+                            button.text('Curtir ' + '( ' + response.likes + ' )');
+                            button.removeClass('liked');
+                            localStorage.removeItem('liked_' + postId); 
+                        }
+
+                    }
+                });
+            });
+        });
+    });
+</script>
+</body>
+
+</html>
