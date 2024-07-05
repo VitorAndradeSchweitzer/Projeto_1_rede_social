@@ -2,7 +2,33 @@
 
 <body>
     {% include 'partials/header.html' %}
+
+ <form action="{% url 'Vitor.net:home' %}" method='POST' enctype="multipart/form-data" >
     {% csrf_token %}
+ <div class="post">
+    <div class="profile_user">
+       
+        <img class='user_picture' src="{{conta.picture.url}}" alt="">
+        
+    </div>
+    <div class="post_text">
+
+        <div class="user_name">{{conta.username}} </div>
+        <textarea class='new_post_text' placeholder='Digite seu novo post'></textarea>
+
+</div>
+<div></div>
+    <div>
+        <img id="image_preview" src="#" alt="Pré-visualização da Imagem"/>
+    </div>
+<div></div>
+    <div class='buttons'> 
+        <input onchange="previewImage(event)" type="file" class='media_button 'name="image_button" id="image_button">
+       <button type="submit" class='media_button new_post_button' >Publicar</button>
+    
+    </div>
+</div>
+</Form>
 
     
     {% for post in posts %}
@@ -11,8 +37,27 @@
 
     {% endfor %}
      
+
+
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('image_preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+
+
+
+    
     $(document).ready(function() {
         $('.read_more').click(function(){
             var read_button = $(this); 
@@ -28,6 +73,8 @@
         });
     });
    $(document).ready(function() {
+   
+
     $('.post_image').click(function(){
         var post_image = $(this)
         
@@ -41,9 +88,6 @@
    
         }
             });
-
-
-
 
         $('.like_button').each(function() {
             var button = $(this);

@@ -55,7 +55,13 @@ $(document).ready(function(){
               {% endfor %}
           `);
       } else if (selected === 'Curtidas') {
-          content.html('Conteúdo das Curtidas');
+        content.html(`
+        {% for post in likes %}
+            <div>
+                {% include 'partials/post.html' %}
+            </div>
+        {% endfor %}
+    `);
       } else if (selected === 'Salvos') {
         content.html(`
         {% for post in saves %}

@@ -110,6 +110,37 @@ body {
         margin-right: 65px;
         margin-left: 25px;
     }
+
+.new_post_text{
+    background: None;
+    width: 95%;
+    min-height: 105px;
+    height: auto;
+    color: white;
+    font-family: serif;
+    font-size: clamp(10px, 20px, 25px);
+    border: 1px solid rgb(97, 97, 97);
+    border-radius: 5px;
+    padding: 5px;
+}  
+
+#image_preview {
+    display: none;
+    margin-top: 15px;
+    height: 300px;
+    max-width: 650px;
+    border-radius: 7px;
+    
+
+}
+.file_input {
+    margin-top: 10px;
+}
+
+.new_post_button{
+ max-width: 100px;
+}
+
 .post {
     margin: 15px 75px;
     display: grid;
@@ -117,7 +148,6 @@ body {
     grid-template-areas:
         "profile_user post_text";
     border: 1px solid rgb(56, 4, 47);
-  
     border-radius: 7px;
     gap: 5px;
     padding: 20px;
@@ -180,10 +210,7 @@ body {
 }
 .buttons {
     display: flex;
- 
     margin-top: 10px;
-
-    
 }
 
 .media_button{ 
@@ -414,6 +441,7 @@ body {
     font-size: 21px;
     color: rgb(136, 136, 136);
     font-family: sans-serif;
+    cursor: pointer;
 }
 
 .selected{
@@ -488,6 +516,9 @@ body {
 
 @media (max-width: 768px) {
     .post{
+        margin: 15px 5px;
+    }
+    .create_new_post_container{
         margin: 15px 5px;
     }
     .post_text {

@@ -81,10 +81,13 @@ def profile_page(request, cont_id):
     posts = Post.objects.filter(author_profile__user=request.user)
     saves = Save.objects.filter(user=request.user)
     saved_posts = [save.post for save in saves]
+    likes = Like.objects.filter(user=request.user)
+    liked_posts = [like.post for like in likes]
     return render(request, 'pages/profile_page.html', context={
         'conta': conta,
         'posts': posts,
         'saves': saved_posts,
+        'likes': liked_posts,
         'is_profile_page': True
     }) 
 
