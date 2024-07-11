@@ -1,87 +1,141 @@
 {% include 'partials/head.html' %}
 <body>
+
     {% include "partials/header.html" %}
     
+    <div class='profile_content'>
+        <div class="image_username">
+            <div class='profile_page_image'>
+                <img src="{{ conta.picture.url }}" alt="" class='login_page_profile_picture'>
+            <form action="{% url 'Vitor.net:change_picture' %}" method='POST' enctype='multipart/form-data'>
+                {% csrf_token %}
+                
+                <label for="login_page_profile_picture_hover" class='login_page_profile_picture_hover'>Clique para alterar foto de perfil
+                <input type="file" accept="image/*"  onchange='previewImage(event)' name="login_page_profile_picture_hover" id="login_page_profile_picture_hover" class='hidden'>
+                </label>
+                <button class='media_button hidden submit_profile_picture'type="submit" >Salvar</button>
+            </form>
+            </div>
+            <p class="username">{{ conta.user.username }} 
+                <svg class='edit_button' width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M20.8477 1.87868C19.6761 0.707109 17.7766 0.707105 16.605 1.87868L2.44744 16.0363C2.02864 16.4551 1.74317 16.9885 1.62702 17.5692L1.03995 20.5046C0.760062 21.904 1.9939 23.1379 3.39334 22.858L6.32868 22.2709C6.90945 22.1548 7.44285 21.8693 7.86165 21.4505L22.0192 7.29289C23.1908 6.12132 23.1908 4.22183 22.0192 3.05025L20.8477 1.87868ZM18.0192 3.29289C18.4098 2.90237 19.0429 2.90237 19.4335 3.29289L20.605 4.46447C20.9956 4.85499 20.9956 5.48815 20.605 5.87868L17.9334 8.55027L15.3477 5.96448L18.0192 3.29289ZM13.9334 7.3787L3.86165 17.4505C3.72205 17.5901 3.6269 17.7679 3.58818 17.9615L3.00111 20.8968L5.93645 20.3097C6.13004 20.271 6.30784 20.1759 6.44744 20.0363L16.5192 9.96448L13.9334 7.3787Z" fill="#ffffff"></path>
+                    </g>
+                </svg>
+            </p>
+        </div>
 
-<div class='profile_content'>
-         <div class="image_username">
-             <img src="{{conta.picture.url}}" alt="" class='login_page_profile_picture'>
-          <p class="username">{{conta.user.username}}</p></div>
         <div class='count_info'>
-         
-         <div class="title "> Email:   </div>
-         <p class="email info">{{conta.user.email}}</p>
+            <div class="title"> Email: </div>
+            <p class="email info">{{ conta.user.email }}</p>
      
-        <div class="title"> Primeiro nome:   </div>
-            <p class="first_name info">{{conta.user.first_name}}</p>
+            <div class="title"> Primeiro nome: </div>
+            <p class="first_name info">{{ conta.user.first_name }}</p>
            
-           <div class="title"> Sobrenome:   </div>
-            <p class="last_name info">{{conta.user.last_name}}</p>
-           </div>
-           
-</div>
+            <div class="title"> Sobrenome: </div>
+            <p class="last_name info">{{ conta.user.last_name }}</p>
+        </div>
+    </div>
 
-   
-</div>
+    <div class="profile_page_options">
+        <div class='post_title selected'>Posts</div>
+        <div class='post_title'>Curtidas</div>
+        <div class='post_title'>Salvos</div>
+    </div>
 
-<div class="profile_page_options">
-<div class='post_title selected'>Posts</div>
-<div class='post_title'>Curtidas</div>
-<div class='post_title'>Salvos</div>
-</div>
-<div class='selected_posts'>
-{% for post in posts %}
-   <div>
-  {% include 'partials/post.html'%}
-</div>
-{% endfor %}
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function(){
-     $('.post_title').click(function() {
-        $('.post_title').removeClass('selected');
-        $(this).addClass('selected');
-
-        var content = $('.selected_posts');
-        var selected = $(this).text()
-
-        if (selected === 'Posts') {
-          content.html(`
-              {% for post in posts %}
-                  <div>
-                      {% include 'partials/post.html' %}
-                  </div>
-              {% endfor %}
-          `);
-      } else if (selected === 'Curtidas') {
-        content.html(`
-        {% for post in likes %}
-            <div>
-                {% include 'partials/post.html' %}
-            </div>
+    <div class='selected_posts'>
+        {% for post in posts %}
+        <div>
+            {% include 'partials/post.html' %}
+        </div>
         {% endfor %}
-    `);
-      } else if (selected === 'Salvos') {
-        content.html(`
-        {% for post in saves %}
-            <div>
-                {% include 'partials/post.html' %}
-            </div>
-        {% endfor %}
-    `);
-      }
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.post_title').click(function() {
+                $('.post_title').removeClass('selected');
+                $(this).addClass('selected');
+
+                var content = $('.selected_posts');
+                var selected = $(this).text();
+
+                if (selected === 'Posts') {
+                    content.html(`
+                        {% for post in posts %}
+                            <div>
+                                {% include 'partials/post.html' %}
+                            </div>
+                        {% endfor %}
+                    `);
+                } else if (selected === 'Curtidas') {
+                    content.html(`
+                        {% for post in likes %}
+                            <div>
+                                {% include 'partials/post.html' %}
+                            </div>
+                        {% endfor %}
+                    `);
+                } else if (selected === 'Salvos') {
+                    content.html(`
+                        {% for post in saves %}
+                            <div>
+                                {% include 'partials/post.html' %}
+                            </div>
+                        {% endfor %}
+                    `);
+                }
+            });
+
+            $('.edit_button').click(function() {
+                var username = $('.username');
+                username.html(`
+                    <form method='POST' action='{% url 'Vitor.net:change_name' %}'>
+                        {% csrf_token %}
+                        <input name='username' class='change_username' type='text' name='username' value='{{ conta.user.username }}'>
+                        <button type='submit' class='media_button'>Salvar</button>
+                        <div class='error_message'>{{ form.username.errors }}</div>
+                    </form>
+                `); 
+            });
+
+            $('.login_page_profile_picture').hover(
+                function() {
+                    $(this).css('filter', 'brightness(40%)');
+                    $('.login_page_profile_picture_hover').css('display', 'block');
+                },
+                function() {
+                    $(this).css('filter', 'brightness(100%)');
+                    $('.login_page_profile_picture_hover').css('display', 'none');
+                }
+            );   
 
 
-     })
 
+            $('.login_page_profile_picture_hover').hover(
+                function() {
+                    $('.login_page_profile_picture').css('filter', 'brightness(40%)');
+                    $('.login_page_profile_picture_hover').css('display', 'block');
+                },
+                function() {
+                    $('.login_page_profile_picture').css('filter', 'brightness(100%)');
+                    $('.login_page_profile_picture_hover').css('display', 'none');
+                }
+            ); 
+        });
 
-  })
-
-
-
-
-
-</script>
+        
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                $('.login_page_profile_picture').attr('src', reader.result);
+                $('.submit_profile_picture').css('display', 'block');
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+        
+    </script>
 </body>
-

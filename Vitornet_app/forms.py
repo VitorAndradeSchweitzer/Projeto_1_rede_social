@@ -1,4 +1,6 @@
 from django import forms
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
@@ -62,3 +64,17 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Ultimo nome não pode estar vazio")
                 
          return last_name
+class UserRename(forms.ModelForm):
+    username = forms.CharField(max_length=30)
+    class Meta:
+      model = User
+      fields = ['username']
+
+    def clean_username(self):
+          username = self.cleaned_data.get('username')
+   
+          if not username:
+              raise forms.ValidationError('Nome de usuario deve ser preenchido')       
+          if '@' in username or '#' in username or ' ' in username:
+            raise forms.ValidationError('Nome de usuario com caracteres invalidos')
+          return username     

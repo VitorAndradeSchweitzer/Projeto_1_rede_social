@@ -5,6 +5,7 @@
 
  <form action="{% url 'Vitor.net:home' %}" method='POST' enctype="multipart/form-data" >
     {% csrf_token %}
+    <input type="hidden" name="new_post" value='new_post'>
  <div class="post">
     <div class="profile_user">
        
@@ -14,8 +15,10 @@
     <div class="post_text">
 
         <div class="user_name">{{conta.username}} </div>
-        <textarea class='new_post_text' placeholder='Digite seu novo post'></textarea>
-
+        <textarea class='new_post_text' id='new_post_text' name='new_post_text'placeholder='Digite seu novo post'></textarea>
+         {% if error %}
+         <label for="new_post_text " class='error_message'>Postagem deve ter algum texto</label>
+         {% endif %}
 </div>
 <div></div>
     <div>
@@ -23,8 +26,10 @@
     </div>
 <div></div>
     <div class='buttons'> 
-        <input onchange="previewImage(event)" type="file" class='media_button 'name="image_button" id="image_button">
-       <button type="submit" class='media_button new_post_button' >Publicar</button>
+        <label class="media_button ">Escolher imagem
+          <input onchange="previewImage(event) " type="file" aceppt="image/*"class='media_button file_upload hidden' name="image_button" id="image_button">
+        </label>
+        <button type="submit" class='media_button new_post_button' >Publicar</button>
     
     </div>
 </div>

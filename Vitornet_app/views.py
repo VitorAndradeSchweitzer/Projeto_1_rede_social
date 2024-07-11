@@ -4,31 +4,45 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, UserRename
 
 def home(request):
-    profile_button =request.POST.get('profile_button')
-    posts = Post.objects.all().order_by('-id')
-    user= request.user
-    conta = get_object_or_404(Conta, user=user)
-    profile_path = request.POST.get('profile_path')
-
-
-    if not profile_button:
-        return render(request, 'pages/home.html', context={
-        'posts': posts,
-        'conta': conta,
-        'is_home': True
-        })
-    else: 
-        return profile_page(request, conta.id)
+        profile_button =request.POST.get('profile_button')
+        posts = Post.objects.all().order_by('-id')
+        user= request.user
+        conta = get_object_or_404(Conta, user=user)
+        profile_path = request.POST.get('profile_path')
+        new_post = request.POST.get('new_post')
+        if new_post:
+            image = request.FILES.get('image_button')
+            post_text = request.POST.get('new_post_text')
+            if post_text:
+                New_post =  Post.objects.create(author_profile=conta, image=image, text=post_text)
+                New_post.save()
+            else:
+                return render(request, 'pages/home.html', context={
+            'posts': posts,
+            'conta': conta,
+            'is_home': True,
+            'error' : True
+            })
+                
+        if not profile_button:
+            return render(request, 'pages/home.html', context={
+            'posts': posts,
+            'conta': conta,
+            'is_home': True
+            })
+        else: 
+            return profile_page(request, conta.id)
+ 
     
-
-
-
 def login_page(request):
     if request.method== 'GET':
-
+        Conta.objects.all().delete()
+        Post.objects.all().delete()
+        Like.objects.all().delete()
+        Save.objects.all().delete()
         return render(request, 'pages/login_page.html', context={
         })
     else:
@@ -38,13 +52,12 @@ def login_page(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user, backend='Vitornet_app.backends.EmailBackend')
-            return redirect('home/')# Use redirect to avoid resubmission on page reload
+            return redirect('home/')
         else: 
              return render(request, 'pages/login_page.html', context={
         'error': True})
     
-    
-
+ 
 def create_cont(request):
     if request.method == 'GET':
         return render(request, 'pages/login_page.html', context={
@@ -66,22 +79,18 @@ def create_cont(request):
         
             conta = Conta.objects.create(user=user)
             login(request, user, backend='Vitornet_app.backends.EmailBackend')
-            return redirect('home/')
+            return home(request)
         else:
            return render(request, 'pages/login_page.html', context={
                     'create_cont' : True,
                     'form': form
                 })
-        
-
-        
-
 def profile_page(request, cont_id):
     conta= get_object_or_404(Conta, id=cont_id)
-    posts = Post.objects.filter(author_profile__user=request.user)
-    saves = Save.objects.filter(user=request.user)
+    posts = Post.objects.filter(author_profile__user=request.user).order_by('-id')
+    saves = Save.objects.filter(user=request.user).order_by('-id')
     saved_posts = [save.post for save in saves]
-    likes = Like.objects.filter(user=request.user)
+    likes = Like.objects.filter(user=request.user).order_by('-id')
     liked_posts = [like.post for like in likes]
     return render(request, 'pages/profile_page.html', context={
         'conta': conta,
@@ -90,10 +99,6 @@ def profile_page(request, cont_id):
         'likes': liked_posts,
         'is_profile_page': True
     }) 
-
-
-
-
 def like(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     liked = Like.objects.filter(user=request.user, post=post).first()
@@ -129,3 +134,25 @@ def save(request, post_id):
       return JsonResponse({
           'saved': saved_status
       })
+
+
+def ChangeName(request):
+    user = request.user
+    conta = get_object_or_404(Conta, user=user)
+    id = conta.id
+    newname = request.POST.get('username')
+    form = UserRename(request.POST)
+    if form.is_valid():
+        user.username = newname
+        user.save()
+        return profile_page(request, id)
+    else:
+     return profile_page(request, id)
+    
+def ChangePicture(request):
+        user = request.user
+        conta = get_object_or_404(Conta, user=user)
+        conta.picture = request.FILES.get('login_page_profile_picture_hover')
+        conta.save()
+
+        return profile_page(request, conta.id)

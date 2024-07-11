@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Conta(models.Model):
-    picture = models.ImageField(upload_to='profile/covers/%y/%m/%d')
+    picture = models.ImageField(upload_to='profile/covers/%y/%m/%d', default='no-profile-picture-icon.png')
     user= models.ForeignKey(User, on_delete= models.SET_NULL, null=True, blank=True)
     
 
