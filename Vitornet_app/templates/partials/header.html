@@ -2,6 +2,8 @@
 
 <header>
     <div class="header">
+       
+    
         {% if is_profile_page %}
         <a href="{% url 'Vitor.net:home' %}" class='back_link'>
         <svg width="30px" height="30px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#ffffff">
@@ -19,6 +21,7 @@
         <form action="{% url 'Vitor.net:profile' conta.id%}"method='POST'>
             {% csrf_token %}
             <input type="hidden" name="profile_button">
+        
         {% if conta.picture  %}
         <button class='profile_button'type="submit">
          <div class='profile_detail_header'>   
@@ -27,15 +30,16 @@
     </div>
     </button>
     </form>
+  
        {% else %}
         <div class='profile_picture'></div>
         {% endif %}
        {% endif%}
-  
+    
       
 
-         
         
            <img src="{%static '\global/VitorNet.png'%}" alt="" class="vitornet_logo_image">
     </div>
 </header>
+

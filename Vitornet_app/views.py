@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from .forms import UserRegistrationForm, UserRename
+import requests
 
 def home(request):
         profile_button =request.POST.get('profile_button')
@@ -39,12 +40,8 @@ def home(request):
     
 def login_page(request):
     if request.method== 'GET':
-        Conta.objects.all().delete()
-        Post.objects.all().delete()
-        Like.objects.all().delete()
-        Save.objects.all().delete()
-        return render(request, 'pages/login_page.html', context={
-        })
+      
+        return render(request, 'pages/login_page.html')
     else:
         email= request.POST.get('email')
         password = request.POST.get('password')
@@ -156,3 +153,14 @@ def ChangePicture(request):
         conta.save()
 
         return profile_page(request, conta.id)
+
+def DeletePost(request, post_id):
+    post =get_object_or_404(Post, id=post_id)
+    post.delete()
+    user = request.user
+    conta = get_object_or_404(Conta, user=user)
+    id = conta.id
+    return profile_page(request, id)
+    
+
+   

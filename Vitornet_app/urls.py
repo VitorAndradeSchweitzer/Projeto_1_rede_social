@@ -13,6 +13,7 @@ urlpatterns = [
    path('like/<int:post_id>/', views.like, name='like'),
    path('save/<int:post_id>/', views.save, name='save'),
    path('changename/', views.ChangeName, name='change_name'),
-   path('changepicture/', views.ChangePicture, name='change_picture')
+   path('changepicture/', views.ChangePicture, name='change_picture'),
+   path('deletepost/<int:post_id>/', views.DeletePost, name='delete_post')
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

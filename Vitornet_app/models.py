@@ -36,3 +36,12 @@ class Save(models.Model):
      
     def __str__(self):
         return self.post
+
+
+class Coment(models.Model):
+    post = models.ForeignKey(Post)
+    author_profile = models.ForeignKey(Conta, on_delete= models.SET_NULL, null=True, blank='True')
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank='True')
+    text = models.CharField(max_length=1600)
+    image = models.ImageField(upload_to='posts/covers/%y/%m/%d', null=True, blank='True')
+    likes = models.IntegerField(default=0)

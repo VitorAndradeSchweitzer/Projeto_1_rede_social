@@ -46,11 +46,8 @@
     {% endif %}
     <span class="like-count">( {{ post.likes }} )</span>
 </button>
-
         </a>
-
        <button class="comment_button media_button">Comentar</button>
-
        <a href="{% url 'Vitor.net:save' post.id %}">
        <button data-post-id="{{ post.id }}" class="save_button media_button">Salvar</button>
     </a>

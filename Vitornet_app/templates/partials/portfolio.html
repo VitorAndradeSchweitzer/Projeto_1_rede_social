@@ -1,0 +1,22 @@
+<div class='portfolio'>
+    <div class='portfolio_name'>Vitor Andrade</div>
+    <div class='portfolio_links'>
+    <div class='portfolio_text'>Gostaria de conhecer mais dos meus projetos?</div>
+       <a href="/">Linkedin</a>
+       <a href="/"> Github</a>
+      </div>   
+       <button class='close_portfolio'><strong>X</strong></button>
+  
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+         $('.close_portfolio').click(function(){
+            $('.portfolio').css('animation', ' slide-up 0.7s ease-out')
+            setTimeout(() => {
+                $('.portfolio').css('display','none');
+            }, 200);
+         })
+    })
+
+</script>

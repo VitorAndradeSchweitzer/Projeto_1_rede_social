@@ -49,6 +49,7 @@
         {% for post in posts %}
         <div>
             {% include 'partials/post.html' %}
+            <a class=''href="{% url 'Vitor.net:delete_post' post.id %}"><button class='media_button'>Deletar</button></a>
         </div>
         {% endfor %}
     </div>
@@ -68,6 +69,7 @@
                         {% for post in posts %}
                             <div>
                                 {% include 'partials/post.html' %}
+                                <a class=''href="/"><button class='media_button'>Deletar</button></a>
                             </div>
                         {% endfor %}
                     `);
